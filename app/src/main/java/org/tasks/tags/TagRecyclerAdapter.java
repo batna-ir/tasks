@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
@@ -18,22 +17,27 @@ import org.tasks.billing.Inventory;
 import org.tasks.data.TagData;
 import org.tasks.tags.CheckBoxTriStates.State;
 import org.tasks.themes.CustomIcons;
+import org.tasks.themes.ThemeCache;
+import org.tasks.themes.ThemeColor;
 
 public class TagRecyclerAdapter extends RecyclerView.Adapter<TagPickerViewHolder> {
 
   private final AsyncListDiffer<TagData> differ;
   private final Context context;
   private final TagPickerViewModel viewModel;
+  private final ThemeCache themeCache;
   private final Inventory inventory;
   private final Function2<TagData, Boolean, State> callback;
 
   TagRecyclerAdapter(
       Context context,
       TagPickerViewModel viewModel,
+      ThemeCache themeCache,
       Inventory inventory,
       Function2<TagData, Boolean, State> callback) {
     this.context = context;
     this.viewModel = viewModel;
+    this.themeCache = themeCache;
     this.inventory = inventory;
     this.callback = callback;
     differ = new AsyncListDiffer<>(this, new TagDiffCallback());
@@ -58,9 +62,11 @@ public class TagRecyclerAdapter extends RecyclerView.Adapter<TagPickerViewHolder
   }
 
   private int getColor(TagData tagData) {
-    return tagData.getColor() == 0
-        ? ContextCompat.getColor(context, R.color.icon_tint_with_alpha)
-        : newThemeColor(context, tagData.getColor()).getPrimaryColor();
+    ThemeColor themeColor =
+        tagData.getColor() == 0
+            ? themeCache.getThemeColor(19)
+            : newThemeColor(context, tagData.getColor());
+    return themeColor.getPrimaryColor();
   }
 
   private @Nullable Integer getIcon(TagData tagData) {

@@ -103,6 +103,7 @@ import org.tasks.tasklist.DragAndDropRecyclerAdapter;
 import org.tasks.tasklist.PagedListRecyclerAdapter;
 import org.tasks.tasklist.TaskListRecyclerAdapter;
 import org.tasks.tasklist.ViewHolderFactory;
+import org.tasks.themes.ThemeCache;
 import org.tasks.themes.ThemeColor;
 import org.tasks.ui.TaskListViewModel;
 import org.tasks.ui.Toaster;
@@ -152,6 +153,7 @@ public final class TaskListFragment extends InjectingFragment
   @Inject TaskDuplicator taskDuplicator;
   @Inject TagDataDao tagDataDao;
   @Inject CaldavDao caldavDao;
+  @Inject ThemeCache themeCache;
   @Inject ThemeColor defaultThemeColor;
 
   @BindView(R.id.swipe_layout)
@@ -529,8 +531,7 @@ public final class TaskListFragment extends InjectingFragment
   }
 
   boolean collapseSearchView() {
-    return search.isActionViewExpanded()
-        && (search.collapseActionView() || !search.isActionViewExpanded());
+    return search.isActionViewExpanded() && search.collapseActionView();
   }
 
   private void refresh() {

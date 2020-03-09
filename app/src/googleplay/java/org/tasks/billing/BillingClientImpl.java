@@ -149,12 +149,11 @@ public class BillingClientImpl implements BillingClient, PurchasesUpdatedListene
   @Override
   public void onPurchasesUpdated(
       @BillingResponse int resultCode, List<com.android.billingclient.api.Purchase> purchases) {
-    boolean success = resultCode == BillingResponse.OK;
-    if (success) {
+    if (resultCode == BillingResponse.OK) {
       add(purchases);
     }
     if (onPurchasesUpdated != null) {
-      onPurchasesUpdated.onPurchasesUpdated(success);
+      onPurchasesUpdated.onPurchasesUpdated();
     }
     String skus =
         purchases == null

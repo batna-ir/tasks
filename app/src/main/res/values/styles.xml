@@ -28,7 +28,7 @@
 
   <style name="WhiteToolbarTheme">
     <item name="overlay_theme">@style/WhiteToolbarOverlay</item>
-    <item name="colorOnPrimary">@color/white_100</item>
+    <item name="colorOnPrimary">@color/white_87</item>
     <item name="colorOnPrimaryHint">@color/white_60</item>
     <item name="android:actionOverflowButtonStyle">@style/WhiteOverflow</item>
   </style>
@@ -36,12 +36,12 @@
   <style name="BlackToolbarTheme">
     <item name="overlay_theme">@style/BlackToolbarOverlay</item>
     <item name="colorOnPrimary">@color/black_87</item>
-    <item name="colorOnPrimaryHint">@color/black_60</item>
+    <item name="colorOnPrimaryHint">@color/black_54</item>
     <item name="android:actionOverflowButtonStyle">@style/BlackOverflow</item>
   </style>
 
   <style name="WhiteTint">
-    <item name="colorOnSecondary">@color/white_100</item>
+    <item name="colorOnSecondary">@color/white_87</item>
   </style>
 
   <style name="BlackTint">
@@ -49,17 +49,17 @@
   </style>
 
   <style name="WhiteOverflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-    <item name="android:tint">@color/white_100</item>
+    <item name="android:tint">@color/white_87</item>
   </style>
 
   <style name="BlackOverflow" parent="Widget.AppCompat.Light.ActionButton.Overflow">
-    <item name="android:tint">@color/black_100</item>
+    <item name="android:tint">@color/black_87</item>
   </style>
 
   <style name="WhiteToolbarOverlay" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
-    <item name="colorControlNormal">@color/white_100</item>
+    <item name="colorControlNormal">@color/white_87</item>
     <item name="android:textColorHint">@color/white_60</item>
-    <item name="android:editTextColor">@color/white_100</item>
+    <item name="android:editTextColor">@color/white_87</item>
   </style>
 
   <style name="BlackToolbarOverlay" parent="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
@@ -93,19 +93,16 @@
 
   <!--=============================================== MainActivity == -->
 
-  <style name="BaseHorizontalDivider">
-    <item name="android:background">@color/divider</item>
-  </style>
-
   <style name="vertical_divider">
     <item name="android:layout_height">match_parent</item>
     <item name="android:layout_width">1dp</item>
-    <item name="android:background">@color/divider</item>
+    <item name="android:background">?attr/dividerVertical</item>
   </style>
 
-  <style name="horizontal_divider" parent="BaseHorizontalDivider">
+  <style name="horizontal_divider">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">1dp</item>
+    <item name="android:background">?attr/dividerHorizontal</item>
   </style>
 
   <style name="task_edit_row_divider" parent="horizontal_divider">
@@ -156,25 +153,19 @@
     <item name="chipMinHeight">@dimen/chip_min_height</item>
     <item name="closeIconVisible">false</item>
     <item name="ensureMinTouchTargetSize">false</item>
-    <item name="chipStrokeWidth">@dimen/chip_stroke</item>
-    <item name="chipSurfaceColor">@android:color/transparent</item>
-    <item name="chipBackgroundColor">@android:color/transparent</item>
-    <item name="iconStartPadding">@dimen/chip_text_padding</item>
-    <item name="iconEndPadding">0dp</item>
-    <item name="android:textColor">@color/chip_text</item>
-    <item name="chipIconTint">@color/text_secondary</item>
-    <item name="chipStrokeColor">@color/text_secondary</item>
   </style>
 
   <style name="ChipStyle.Closable">
+    <item name="closeIconEndPadding">0dp</item>
     <item name="closeIconVisible">true</item>
+    <item name="closeIconStartPadding">0dp</item>
   </style>
 
   <style name="OutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
     <item name="android:textColor">@color/button_accent_text</item>
     <item name="backgroundTint">@color/button_accent_background</item>
     <item name="rippleColor">@color/button_accent_ripple</item>
-    <item name="strokeColor">@color/button_selected_accent_stroke</item>
+    <item name="strokeColor">@color/button_accent_stroke</item>
   </style>
 
   <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton">

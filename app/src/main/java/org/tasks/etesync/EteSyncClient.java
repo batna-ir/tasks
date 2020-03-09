@@ -102,7 +102,6 @@ public class EteSyncClient {
     this.username = username;
     this.encryptionPassword = encryptionPassword;
     this.token = token;
-    this.foreground = foreground;
 
     CustomCertManager customCertManager = new CustomCertManager(context);
     customCertManager.setAppInForeground(foreground);
@@ -152,25 +151,10 @@ public class EteSyncClient {
         foreground);
   }
 
-  private EteSyncClient withToken(String token)
-      throws KeyManagementException, NoSuchAlgorithmException {
-    return new EteSyncClient(
-        context,
-        encryption,
-        preferences,
-        interceptor,
-        httpUrl.toString(),
-        username,
-        encryptionPassword,
-        token,
-        foreground);
-  }
-
-  Pair<UserInfo, String> getInfoAndToken(String password)
-      throws IOException, HttpException, NoSuchAlgorithmException, KeyManagementException {
+  Pair<UserInfo, String> getInfoAndToken(String password) throws IOException, HttpException {
     JournalAuthenticator journalAuthenticator = new JournalAuthenticator(httpClient, httpUrl);
     String token = journalAuthenticator.getAuthToken(username, password);
-    return Pair.create(withToken(token).getUserInfo(), token);
+    return Pair.create(getUserInfo(), token);
   }
 
   UserInfo getUserInfo() throws HttpException {
@@ -242,13 +226,13 @@ public class EteSyncClient {
 
   void invalidateToken() {
     try {
-      new JournalAuthenticator(httpClient, httpUrl).invalidateAuthToken(token);
+        new JournalAuthenticator(httpClient, httpUrl).invalidateAuthToken(token);
     } catch (Exception e) {
       Timber.e(e);
     }
   }
 
-  String makeCollection(String name, int color)
+  String makeCollection(String name)
       throws VersionTooNewException, IntegrityException, HttpException {
     String uid = Journal.genUid();
     CollectionInfo collectionInfo = new CollectionInfo();
@@ -256,21 +240,8 @@ public class EteSyncClient {
     collectionInfo.setType(TYPE_TASKS);
     collectionInfo.setUid(uid);
     collectionInfo.setSelected(true);
-    collectionInfo.setColor(color == 0 ? null : color);
     CryptoManager crypto = new CryptoManager(collectionInfo.getVersion(), encryptionPassword, uid);
     journalManager.create(new Journal(crypto, collectionInfo.toJson(), uid));
-    return uid;
-  }
-
-  String updateCollection(CaldavCalendar calendar, String name, int color)
-      throws VersionTooNewException, IntegrityException, HttpException {
-    String uid = calendar.getUrl();
-    Journal journal = journalManager.fetch(uid);
-    CollectionInfo collectionInfo = convertJournalToCollection(journal);
-    collectionInfo.setDisplayName(name);
-    collectionInfo.setColor(color == 0 ? null : color);
-    CryptoManager crypto = new CryptoManager(collectionInfo.getVersion(), encryptionPassword, uid);
-    journalManager.update(new Journal(crypto, collectionInfo.toJson(), uid));
     return uid;
   }
 

@@ -35,8 +35,8 @@ android {
     defaultConfig {
         testApplicationId = "org.tasks.test"
         applicationId = "org.tasks"
-        versionCode = 682
-        versionName = "8.2.1"
+        versionCode = 675
+        versionName = "8.1"
         targetSdkVersion(Versions.targetSdk)
         minSdkVersion(Versions.minSdk)
         multiDexEnabled = true
@@ -195,7 +195,7 @@ dependencies {
     implementation("androidx.work:work-runtime:${Versions.work}")
     implementation("com.mapbox.mapboxsdk:mapbox-android-sdk:7.3.0")
     implementation("com.mapbox.mapboxsdk:mapbox-sdk-services:4.6.0")
-    implementation("com.etesync:journalmanager:1.1.0")
+    implementation("com.etesync:journalmanager:1.0.4")
     implementation("com.github.QuadFlask:colorpicker:0.0.15")
 
     googleplayImplementation("com.crashlytics.sdk.android:crashlytics:${Versions.crashlytics}")

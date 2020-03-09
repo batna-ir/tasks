@@ -112,7 +112,7 @@ public class GoogleTaskList implements Parcelable {
   }
 
   public Integer getColor() {
-    return color == null ? 0 : color;
+    return color == null ? -1 : color;
   }
 
   public void setColor(Integer color) {

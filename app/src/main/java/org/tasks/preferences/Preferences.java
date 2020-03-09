@@ -38,13 +38,12 @@ import org.tasks.BuildConfig;
 import org.tasks.R;
 import org.tasks.billing.Purchase;
 import org.tasks.data.TaskAttachment;
-import org.tasks.themes.ThemeBase;
 import org.tasks.time.DateTime;
 import timber.log.Timber;
 
 public class Preferences {
 
-  public static final String P_CURRENT_VERSION = "cv"; // $NON-NLS-1$
+  private static final String P_CURRENT_VERSION = "cv"; // $NON-NLS-1$
 
   private static final String PREF_SORT_SORT = "sort_sort"; // $NON-NLS-1$
 
@@ -533,17 +532,5 @@ public class Preferences {
 
   public boolean showSubtasks() {
     return atLeastLollipop() && getBoolean(R.string.p_show_subtasks, false);
-  }
-
-  public int getThemeBase() {
-    return getInt(R.string.p_theme, ThemeBase.DEFAULT_BASE_THEME);
-  }
-
-  public boolean alreadyNotified(String account, String scope) {
-    return getBoolean(context.getString(R.string.p_notified_oauth_error, account, scope), false);
-  }
-
-  public void setAlreadyNotified(String account, String scope, boolean value) {
-    setBoolean(context.getString(R.string.p_notified_oauth_error, account, scope), value);
   }
 }

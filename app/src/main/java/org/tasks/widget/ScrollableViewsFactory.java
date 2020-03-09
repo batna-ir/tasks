@@ -12,7 +12,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import androidx.core.content.ContextCompat;
 import com.todoroo.andlib.utility.DateUtilities;
 import com.todoroo.astrid.api.Filter;
 import com.todoroo.astrid.dao.TaskDao;
@@ -27,11 +26,14 @@ import org.tasks.data.TaskListQuery;
 import org.tasks.locale.Locale;
 import org.tasks.preferences.DefaultFilterProvider;
 import org.tasks.preferences.Preferences;
+import org.tasks.themes.ThemeCache;
+import org.tasks.themes.WidgetTheme;
 import org.tasks.ui.CheckBoxes;
 import timber.log.Timber;
 
 class ScrollableViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
+  private final ThemeCache themeCache;
   private final int widgetId;
   private final TaskDao taskDao;
   private final DefaultFilterProvider defaultFilterProvider;
@@ -58,13 +60,15 @@ class ScrollableViewsFactory implements RemoteViewsService.RemoteViewsFactory {
       Context context,
       int widgetId,
       TaskDao taskDao,
-      DefaultFilterProvider defaultFilterProvider) {
+      DefaultFilterProvider defaultFilterProvider,
+      ThemeCache themeCache) {
     this.subtasksHelper = subtasksHelper;
     this.preferences = preferences;
     this.context = context;
     this.widgetId = widgetId;
     this.taskDao = taskDao;
     this.defaultFilterProvider = defaultFilterProvider;
+    this.themeCache = themeCache;
     widgetPreferences = new WidgetPreferences(context, preferences, widgetId);
     DisplayMetrics metrics = context.getResources().getDisplayMetrics();
     widgetPadding = (int)(10 * metrics.density);
@@ -120,7 +124,7 @@ class ScrollableViewsFactory implements RemoteViewsService.RemoteViewsFactory {
   }
 
   private Bitmap getCheckbox(Task task) {
-    return CheckBoxes.getWidgetCheckBox(context, task);
+    return CheckBoxes.getCheckBoxBitmap(context, task);
   }
 
   private RemoteViews buildUpdate(int position) {
@@ -229,11 +233,9 @@ class ScrollableViewsFactory implements RemoteViewsService.RemoteViewsFactory {
   }
 
   private void updateSettings() {
-    boolean isDark = widgetPreferences.getThemeIndex() > 0;
-    textColorPrimary =
-        ContextCompat.getColor(context, isDark ? R.color.white_87 : R.color.black_87);
-    textColorSecondary =
-        ContextCompat.getColor(context, isDark ? R.color.white_60 : R.color.black_60);
+    WidgetTheme widgetTheme = themeCache.getWidgetTheme(widgetPreferences.getThemeIndex());
+    textColorPrimary = widgetTheme.getTextColorPrimary();
+    textColorSecondary = widgetTheme.getTextColorSecondary();
     showDueDates = widgetPreferences.showDueDate();
     showCheckboxes = widgetPreferences.showCheckboxes();
     textSize = widgetPreferences.getFontSize();

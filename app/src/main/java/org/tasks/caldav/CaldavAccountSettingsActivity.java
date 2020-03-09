@@ -49,9 +49,9 @@ public class CaldavAccountSettingsActivity extends BaseCaldavAccountSettingsActi
     newAccount.setName(getNewName());
     newAccount.setUrl(principal);
     newAccount.setUsername(getNewUsername());
-    newAccount.setPassword(encryption.encrypt(getNewPassword()));
+//    newAccount.setPassword(encryption.encrypt(getNewPassword()));
     newAccount.setUuid(UUIDHelper.newUUID());
-    newAccount.setId(caldavDao.insert(newAccount));
+//    newAccount.setId(caldavDao.insert(newAccount));
 
     setResult(RESULT_OK);
     finish();
@@ -65,10 +65,10 @@ public class CaldavAccountSettingsActivity extends BaseCaldavAccountSettingsActi
     caldavAccount.setUsername(getNewUsername());
     caldavAccount.setError("");
     if (passwordChanged()) {
-      caldavAccount.setPassword(encryption.encrypt(getNewPassword()));
+//      caldavAccount.setPassword(encryption.encrypt(getNewPassword()));
     }
     caldavAccount.setSuppressRepeatingTasks(binding.repeat.isChecked());
-    caldavDao.update(caldavAccount);
+//    caldavDao.update(caldavAccount);
 
     setResult(RESULT_OK);
     finish();
@@ -92,7 +92,8 @@ public class CaldavAccountSettingsActivity extends BaseCaldavAccountSettingsActi
   @Override
   protected String getNewPassword() {
     String input = binding.password.getText().toString().trim();
-    return PASSWORD_MASK.equals(input) ? encryption.decrypt(caldavAccount.getPassword()) : input;
+//    return PASSWORD_MASK.equals(input) ? encryption.decrypt(caldavAccount.getPassword()) : input;
+    return input;
   }
 
   @Override

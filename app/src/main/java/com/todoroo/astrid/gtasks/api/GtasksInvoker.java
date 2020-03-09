@@ -1,6 +1,8 @@
 package com.todoroo.astrid.gtasks.api;
 
+import android.accounts.AccountManager;
 import android.content.Context;
+import android.os.Bundle;
 import androidx.annotation.Nullable;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.HttpRequest;
@@ -80,7 +82,9 @@ public class GtasksInvoker {
 
   private void checkToken() {
     if (credential != null && Strings.isNullOrEmpty(credential.getAccessToken())) {
-      credential.setAccessToken(googleAccountManager.getAccessToken(account, TasksScopes.TASKS));
+      Bundle bundle = googleAccountManager.getAccessToken(account, TasksScopes.TASKS);
+      credential.setAccessToken(
+          bundle != null ? bundle.getString(AccountManager.KEY_AUTHTOKEN) : null);
     }
   }
 

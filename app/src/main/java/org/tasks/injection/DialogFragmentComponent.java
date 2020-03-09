@@ -1,11 +1,13 @@
 package org.tasks.injection;
 
 import dagger.Subcomponent;
-import org.tasks.activities.RemoteListPicker;
 import org.tasks.calendars.CalendarPicker;
+import org.tasks.activities.RemoteListPicker;
+import org.tasks.billing.NameYourPriceDialog;
+import org.tasks.billing.PurchaseDialog;
 import org.tasks.dialogs.AddAttachmentDialog;
-import org.tasks.dialogs.ColorPalettePicker;
 import org.tasks.dialogs.ColorWheelPicker;
+import org.tasks.dialogs.ColorPalettePicker;
 import org.tasks.dialogs.ExportTasksDialog;
 import org.tasks.dialogs.GeofenceDialog;
 import org.tasks.dialogs.IconPickerDialog;
@@ -46,6 +48,10 @@ public interface DialogFragmentComponent {
   void inject(SeekBarDialog seekBarDialog);
 
   void inject(IconPickerDialog iconPickerDialog);
+
+  void inject(PurchaseDialog purchaseDialog);
+
+  void inject(NameYourPriceDialog nameYourPriceDialog);
 
   void inject(ExportTasksDialog exportTasksDialog);
 

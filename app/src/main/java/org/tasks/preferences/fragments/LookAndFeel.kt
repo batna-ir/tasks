@@ -37,10 +37,9 @@ import org.tasks.preferences.DefaultFilterProvider
 import org.tasks.preferences.Preferences
 import org.tasks.themes.ThemeAccent
 import org.tasks.themes.ThemeBase
-import org.tasks.themes.ThemeBase.DEFAULT_BASE_THEME
-import org.tasks.themes.ThemeBase.EXTRA_THEME_OVERRIDE
+import org.tasks.themes.ThemeCache
+import org.tasks.themes.ThemeCache.EXTRA_THEME_OVERRIDE
 import org.tasks.themes.ThemeColor
-import org.tasks.themes.ThemeColor.getLauncherColor
 import org.tasks.time.DateTime
 import org.tasks.ui.NavigationDrawerFragment.REQUEST_PURCHASE
 import org.tasks.ui.SingleCheckedArrayAdapter
@@ -66,6 +65,7 @@ private const val FRAG_TAG_COLOR_PICKER = "frag_tag_color_picker"
 
 class LookAndFeel : InjectingPreferenceFragment(), Preference.OnPreferenceChangeListener {
 
+    @Inject lateinit var themeCache: ThemeCache
     @Inject lateinit var themeBase: ThemeBase
     @Inject lateinit var themeColor: ThemeColor
     @Inject lateinit var themeAccent: ThemeAccent
@@ -87,8 +87,7 @@ class LookAndFeel : InjectingPreferenceFragment(), Preference.OnPreferenceChange
             }
 
         val themePref = findPreference(R.string.p_theme)
-        val themeNames = resources.getStringArray(R.array.base_theme_names)
-        themePref.summary = themeNames[themeBase.index]
+        themePref.summary = themeBase.name
         themePref.setOnPreferenceClickListener {
             newThemePickerDialog(this, REQUEST_THEME_PICKER, themeBase.index)
                 .show(parentFragmentManager, FRAG_TAG_THEME_PICKER)
@@ -163,7 +162,7 @@ class LookAndFeel : InjectingPreferenceFragment(), Preference.OnPreferenceChange
     }
 
     private fun updateLauncherPreference() {
-        val launcher = getLauncherColor(context, preferences.getInt(R.string.p_theme_launcher, 7))
+        val launcher = themeCache.getThemeColor(preferences.getInt(R.string.p_theme_launcher, 7))
         setupColorPreference(
             R.string.p_theme_launcher,
             launcher.pickerColor,
@@ -254,7 +253,7 @@ class LookAndFeel : InjectingPreferenceFragment(), Preference.OnPreferenceChange
         preferences.setInt(R.string.p_theme, index)
         if (themeBase.index != index) {
             Handler().post {
-                ThemeBase(index).setDefaultNightMode()
+                themeCache.getThemeBase(index).setDefaultNightMode()
                 recreate()
             }
         }
@@ -263,17 +262,17 @@ class LookAndFeel : InjectingPreferenceFragment(), Preference.OnPreferenceChange
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_PURCHASE) {
             val index = if (inventory.hasPro()) {
-                data?.getIntExtra(ThemePickerDialog.EXTRA_SELECTED, DEFAULT_BASE_THEME)
+                data?.getIntExtra(ThemePickerDialog.EXTRA_SELECTED, themeBase.index)
                     ?: themeBase.index
             } else {
-                preferences.themeBase
+                preferences.getInt(R.string.p_theme, 0)
             }
             setBaseTheme(index)
         } else if (requestCode == REQUEST_THEME_PICKER) {
-            val index = data?.getIntExtra(ThemePickerDialog.EXTRA_SELECTED, DEFAULT_BASE_THEME)
-                ?: preferences.themeBase
+            val index = data?.getIntExtra(ThemePickerDialog.EXTRA_SELECTED, themeBase.index)
+                ?: preferences.getInt(R.string.p_theme, 0)
             if (resultCode == RESULT_OK) {
-                if (inventory.purchasedThemes() || ThemeBase(index).isFree) {
+                if (inventory.purchasedThemes() || index < 2) {
                     setBaseTheme(index)
                 } else {
                     startActivityForResult(

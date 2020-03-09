@@ -2,6 +2,7 @@ package org.tasks.caldav;
 
 import static android.text.TextUtils.isEmpty;
 import static com.todoroo.astrid.data.Task.NO_ID;
+import static org.tasks.billing.PurchaseDialog.newPurchaseDialog;
 
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +31,6 @@ import java.net.URISyntaxException;
 import javax.inject.Inject;
 import org.tasks.R;
 import org.tasks.billing.Inventory;
-import org.tasks.billing.PurchaseActivity;
 import org.tasks.data.CaldavAccount;
 import org.tasks.data.CaldavDao;
 import org.tasks.databinding.ActivityCaldavAccountSettingsBinding;
@@ -45,11 +45,11 @@ public abstract class BaseCaldavAccountSettingsActivity extends ThemedInjectingA
 
   public static final String EXTRA_CALDAV_DATA = "caldavData"; // $NON-NLS-1$
   protected static final String PASSWORD_MASK = "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022";
-  @Inject protected CaldavDao caldavDao;
-  @Inject protected Encryption encryption;
-  @Inject DialogBuilder dialogBuilder;
-  @Inject TaskDeleter taskDeleter;
-  @Inject Inventory inventory;
+//  @Inject protected CaldavDao caldavDao;
+//  @Inject protected Encryption encryption;
+//  @Inject DialogBuilder dialogBuilder;
+//  @Inject TaskDeleter taskDeleter;
+//  @Inject Inventory inventory;
 
   protected CaldavAccount caldavAccount;
 
@@ -108,14 +108,14 @@ public abstract class BaseCaldavAccountSettingsActivity extends ThemedInjectingA
       imm.showSoftInput(binding.name, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    if (!inventory.hasPro()) {
-      newSnackbar(getString(R.string.this_feature_requires_a_subscription))
-          .setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE)
-          .setAction(
-              R.string.button_subscribe,
-              v -> startActivity(new Intent(this, PurchaseActivity.class)))
-          .show();
-    }
+//    if (!inventory.hasPro()) {
+//      newSnackbar(getString(R.string.this_feature_requires_a_subscription))
+//          .setDuration(BaseTransientBottomBar.LENGTH_INDEFINITE)
+//          .setAction(
+//              R.string.button_subscribe,
+//              v -> newPurchaseDialog().show(getSupportFragmentManager(), null))
+//          .show();
+//    }
   }
 
   protected abstract @StringRes int getDescription();
@@ -345,19 +345,19 @@ public abstract class BaseCaldavAccountSettingsActivity extends ThemedInjectingA
       return;
     }
 
-    dialogBuilder
-        .newDialog()
-        .setMessage(R.string.logout_warning, caldavAccount.getName())
-        .setPositiveButton(R.string.remove, (dialog, which) -> removeAccount())
-        .setNegativeButton(android.R.string.cancel, null)
-        .show();
+//    dialogBuilder
+//        .newDialog()
+//        .setMessage(R.string.logout_warning, caldavAccount.getName())
+//        .setPositiveButton(R.string.remove, (dialog, which) -> removeAccount())
+//        .setNegativeButton(android.R.string.cancel, null)
+//        .show();
   }
 
-  protected void removeAccount() {
-    taskDeleter.delete(caldavAccount);
-    setResult(RESULT_OK);
-    finish();
-  }
+//  protected void removeAccount() {
+//    taskDeleter.delete(caldavAccount);
+//    setResult(RESULT_OK);
+//    finish();
+//  }
 
   private void discard() {
     if (requestInProgress()) {
@@ -367,24 +367,24 @@ public abstract class BaseCaldavAccountSettingsActivity extends ThemedInjectingA
     if (!hasChanges()) {
       finish();
     } else {
-      dialogBuilder
-          .newDialog(R.string.discard_changes)
-          .setPositiveButton(R.string.discard, (dialog, which) -> finish())
-          .setNegativeButton(android.R.string.cancel, null)
-          .show();
+//      dialogBuilder
+//          .newDialog(R.string.discard_changes)
+//          .setPositiveButton(R.string.discard, (dialog, which) -> finish())
+//          .setNegativeButton(android.R.string.cancel, null)
+//          .show();
     }
   }
 
   @Override
   public boolean onMenuItemClick(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.help:
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getHelpUrl())));
-        break;
-      case R.id.remove:
-        removeAccountPrompt();
-        break;
-    }
+//    switch (item.getItemId()) {
+//      case R.id.help:
+//        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getHelpUrl())));
+//        break;
+//      case R.id.remove:
+//        removeAccountPrompt();
+//        break;
+//    }
     return onOptionsItemSelected(item);
   }
 }

@@ -20,24 +20,18 @@ import org.tasks.injection.DialogFragmentComponent
 import org.tasks.injection.InjectingDialogFragment
 import org.tasks.themes.ThemeAccent
 import org.tasks.themes.ThemeBase
-import org.tasks.themes.ThemeBase.EXTRA_THEME_OVERRIDE
+import org.tasks.themes.ThemeCache
+import org.tasks.themes.ThemeCache.EXTRA_THEME_OVERRIDE
 import javax.inject.Inject
 
 class ThemePickerDialog : InjectingDialogFragment() {
 
     companion object {
         const val EXTRA_SELECTED = "extra_selected"
-        const val EXTRA_WIDGET = "extra_widget"
 
-        fun newThemePickerDialog(
-            target: Fragment,
-            rc: Int,
-            selected: Int,
-            widget: Boolean = false
-        ): ThemePickerDialog {
+        fun newThemePickerDialog(target: Fragment, rc: Int, selected: Int): ThemePickerDialog {
             val args = Bundle()
             args.putInt(EXTRA_SELECTED, selected)
-            args.putBoolean(EXTRA_WIDGET, widget)
             val dialog = ThemePickerDialog()
             dialog.setTargetFragment(target, rc)
             dialog.arguments = args
@@ -48,6 +42,7 @@ class ThemePickerDialog : InjectingDialogFragment() {
     @Inject lateinit var inventory: Inventory
     @Inject lateinit var dialogBuilder: DialogBuilder
     @Inject lateinit var accent: ThemeAccent
+    @Inject lateinit var themeCache: ThemeCache
     @Inject lateinit var themeBase: ThemeBase
 
     var adapter: ArrayAdapter<String>? = null
@@ -57,16 +52,14 @@ class ThemePickerDialog : InjectingDialogFragment() {
     override fun inject(component: DialogFragmentComponent) = component.inject(this)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val themes = resources.getStringArray(R.array.base_theme_names)
+
         selected = savedInstanceState?.getInt(EXTRA_SELECTED) ?: arguments!!.getInt(EXTRA_SELECTED)
-        val widget = arguments?.getBoolean(EXTRA_WIDGET) ?: false
-        val themes = resources.getStringArray(
-            if (widget) R.array.widget_themes else R.array.base_theme_names
-        )
 
         adapter = object : ArrayAdapter<String>(activity!!, R.layout.simple_list_item_single_choice, themes) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val view = super.getView(position, convertView, parent)
-                val textColor = if (isAvailable(position)) {
+                val textColor = if (inventory.purchasedThemes() || position < 2) {
                     R.color.text_primary
                 } else {
                     R.color.text_tertiary
@@ -87,7 +80,7 @@ class ThemePickerDialog : InjectingDialogFragment() {
                         updateButton()
                         activity?.intent?.putExtra(EXTRA_THEME_OVERRIDE, which)
                         Handler().post {
-                            ThemeBase(which).setDefaultNightMode()
+                            themeCache.getThemeBase(which).setDefaultNightMode()
                             activity?.recreate()
                             activity?.overridePendingTransition(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
                         }
@@ -130,8 +123,5 @@ class ThemePickerDialog : InjectingDialogFragment() {
         dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.text = getString(stringRes)
     }
 
-    private fun available() = isAvailable(selected)
-
-    private fun isAvailable(index: Int) =
-        inventory.purchasedThemes() || ThemeBase(index).isFree
+    private fun available() = inventory.purchasedThemes() || selected < 2
 }

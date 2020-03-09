@@ -21,7 +21,6 @@ import butterknife.OnClick;
 import javax.inject.Inject;
 import org.tasks.R;
 import org.tasks.dialogs.ColorPalettePicker;
-import org.tasks.dialogs.ColorPickerAdapter.Palette;
 import org.tasks.dialogs.ColorWheelPicker;
 import org.tasks.dialogs.DialogBuilder;
 import org.tasks.dialogs.IconPickerDialog.IconPickerCallback;
@@ -124,7 +123,7 @@ public abstract class BaseListSettingsActivity extends ThemedInjectingAppCompatA
 
   @OnClick(R.id.color_row)
   protected void showThemePicker() {
-    ColorPalettePicker.Companion.newColorPalette(null, 0, selectedColor, Palette.COLORS)
+    ColorPalettePicker.Companion.newColorPalette(null, 0, selectedColor)
         .show(getSupportFragmentManager(), FRAG_TAG_COLOR_PICKER);
   }
 
@@ -165,16 +164,15 @@ public abstract class BaseListSettingsActivity extends ThemedInjectingAppCompatA
 
   protected void updateTheme() {
     ThemeColor themeColor;
+    DrawableUtil.setLeftDrawable(this, color, R.drawable.color_picker);
+    Drawable leftDrawable = getLeftDrawable(color);
     if (selectedColor == 0) {
       themeColor = this.themeColor;
-      DrawableUtil.setLeftDrawable(this, color, R.drawable.ic_outline_not_interested_24px);
       DrawableCompat.setTint(
-          getLeftDrawable(color), ContextCompat.getColor(this, R.color.icon_tint_with_alpha));
+          leftDrawable, ContextCompat.getColor(this, android.R.color.transparent));
       clear.setVisibility(View.GONE);
     } else {
       themeColor = newThemeColor(this, selectedColor);
-      DrawableUtil.setLeftDrawable(this, color, R.drawable.color_picker);
-      Drawable leftDrawable = getLeftDrawable(color);
       DrawableCompat.setTint(
           leftDrawable instanceof LayerDrawable
               ? ((LayerDrawable) leftDrawable).getDrawable(0)

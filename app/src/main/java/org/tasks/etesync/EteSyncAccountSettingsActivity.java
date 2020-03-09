@@ -26,6 +26,8 @@ import org.tasks.data.CaldavAccount;
 import org.tasks.gtasks.PlayServices;
 import org.tasks.injection.ActivityComponent;
 import org.tasks.injection.ForApplication;
+import org.tasks.security.Encryption;
+
 import timber.log.Timber;
 
 public class EteSyncAccountSettingsActivity extends BaseCaldavAccountSettingsActivity
@@ -39,6 +41,7 @@ public class EteSyncAccountSettingsActivity extends BaseCaldavAccountSettingsAct
 
   private AddEteSyncAccountViewModel addAccountViewModel;
   private UpdateEteSyncAccountViewModel updateAccountViewModel;
+  private Encryption encryption;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +97,9 @@ public class EteSyncAccountSettingsActivity extends BaseCaldavAccountSettingsAct
     account.setUrl(getNewURL());
     account.setUsername(getNewUsername());
     String token = userInfoAndToken.second;
-    if (!token.equals(account.getPassword(encryption))) {
-      account.setPassword(encryption.encrypt(token));
-    }
+//    if (!token.equals(account.getPassword(encryption))) {
+//      account.setPassword(encryption.encrypt(token));
+//    }
 
     UserInfo userInfo = userInfoAndToken.first;
     if (testUserInfo(userInfo)) {
@@ -145,12 +148,12 @@ public class EteSyncAccountSettingsActivity extends BaseCaldavAccountSettingsAct
 
   @Override
   protected void updateAccount(String url, String username, String password) {
-    updateAccountViewModel.updateAccount(
-        eteSyncClient,
-        url,
-        username,
-        PASSWORD_MASK.equals(password) ? null : password,
-        caldavAccount.getPassword(encryption));
+//    updateAccountViewModel.updateAccount(
+//        eteSyncClient,
+//        url,
+//        username,
+//        PASSWORD_MASK.equals(password) ? null : password
+//        caldavAccount.getPassword(encryption));
   }
 
   @Override
@@ -185,7 +188,7 @@ public class EteSyncAccountSettingsActivity extends BaseCaldavAccountSettingsAct
     if (requestCode == REQUEST_ENCRYPTION_PASSWORD) {
       if (resultCode == RESULT_OK) {
         String key = data.getStringExtra(EncryptionSettingsActivity.EXTRA_DERIVED_KEY);
-        caldavAccount.setEncryptionKey(encryption.encrypt(key));
+//        caldavAccount.setEncryptionKey(encryption.encrypt(key));
         saveAccountAndFinish();
       }
     } else {
@@ -194,22 +197,22 @@ public class EteSyncAccountSettingsActivity extends BaseCaldavAccountSettingsAct
   }
 
   private void saveAccountAndFinish() {
-    if (caldavAccount.getId() == NO_ID) {
-      caldavDao.insert(caldavAccount);
-    } else {
-      caldavDao.update(caldavAccount);
-    }
+//    if (caldavAccount.getId() == NO_ID) {
+//      caldavDao.insert(caldavAccount);
+//    } else {
+//      caldavDao.update(caldavAccount);
+//    }
     setResult(RESULT_OK);
     finish();
   }
 
-  @Override
+//  @Override
   protected void removeAccount() {
     if (caldavAccount != null) {
       Completable.fromAction(() -> eteSyncClient.forAccount(caldavAccount).invalidateToken())
           .subscribeOn(Schedulers.io())
           .subscribe();
     }
-    super.removeAccount();
+//    super.removeAccount();
   }
 }

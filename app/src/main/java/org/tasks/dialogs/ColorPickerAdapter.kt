@@ -7,19 +7,18 @@ import androidx.recyclerview.widget.ListAdapter
 import org.tasks.Callback
 import org.tasks.R
 import org.tasks.billing.Inventory
-import org.tasks.dialogs.ColorPalettePicker.Pickable
 
 class ColorPickerAdapter(
     private val activity: Activity,
     private val inventory: Inventory,
     private val onSelected: Callback<Int>
-) : ListAdapter<Pickable, IconPickerHolder>(DiffCallback()) {
+) : ListAdapter<ColorPalettePicker.Pickable, IconPickerHolder>(DiffCallback()) {
 
     enum class Palette {
         COLORS,
         ACCENTS,
         LAUNCHERS,
-        WIDGET
+        WIDGET_BACKGROUND
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconPickerHolder {
@@ -31,7 +30,7 @@ class ColorPickerAdapter(
         val pickable = getItem(position)
         val available = inventory.purchasedThemes() || pickable.isFree
         holder.bind(
-            position,
+            pickable.index,
             if (available) R.drawable.color_picker else R.drawable.ic_outline_vpn_key_24px,
             pickable.pickerColor,
             1f,
@@ -39,13 +38,19 @@ class ColorPickerAdapter(
         )
     }
 
-    private class DiffCallback : DiffUtil.ItemCallback<Pickable>() {
-        override fun areItemsTheSame(oldItem: Pickable, newItem: Pickable): Boolean {
+    private class DiffCallback : DiffUtil.ItemCallback<ColorPalettePicker.Pickable>() {
+        override fun areItemsTheSame(
+            oldItem: ColorPalettePicker.Pickable,
+            newItem: ColorPalettePicker.Pickable
+        ): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Pickable, newItem: Pickable): Boolean {
-            return true
+        override fun areContentsTheSame(
+            oldItem: ColorPalettePicker.Pickable,
+            newItem: ColorPalettePicker.Pickable
+        ): Boolean {
+            return oldItem.index == newItem.index
         }
     }
 }

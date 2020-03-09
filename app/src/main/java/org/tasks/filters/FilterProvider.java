@@ -175,19 +175,19 @@ public class FilterProvider {
       items.add(new NavigationDrawerSeparator());
 
       //noinspection ConstantConditions
-      if (BuildConfig.FLAVOR.equals("generic")) {
-        items.add(
-            new NavigationDrawerAction(
-                context.getString(R.string.TLA_menu_donate),
-                R.drawable.ic_outline_attach_money_24px,
-                REQUEST_DONATE));
-      } else if (!inventory.hasPro()) {
-        items.add(
-            new NavigationDrawerAction(
-                context.getString(R.string.name_your_price),
-                R.drawable.ic_outline_attach_money_24px,
-                REQUEST_PURCHASE));
-      }
+//      if (BuildConfig.FLAVOR.equals("generic")) {
+//        items.add(
+//            new NavigationDrawerAction(
+//                context.getString(R.string.TLA_menu_donate),
+//                R.drawable.ic_outline_attach_money_24px,
+//                REQUEST_DONATE));
+//      } else if (!inventory.hasPro()) {
+//        items.add(
+//            new NavigationDrawerAction(
+//                context.getString(R.string.name_your_price),
+//                R.drawable.ic_outline_attach_money_24px,
+//                REQUEST_PURCHASE));
+//      }
 
       items.add(
           new NavigationDrawerAction(
@@ -196,12 +196,12 @@ public class FilterProvider {
               new Intent(context, MainPreferences.class),
               REQUEST_SETTINGS));
 
-      items.add(
-          new NavigationDrawerAction(
-              context.getString(R.string.help_and_feedback),
-              R.drawable.ic_outline_help_outline_24px,
-              new Intent(context, HelpAndFeedback.class),
-              0));
+//      items.add(
+//          new NavigationDrawerAction(
+//              context.getString(R.string.help_and_feedback),
+//              R.drawable.ic_outline_help_outline_24px,
+//              new Intent(context, HelpAndFeedback.class),
+//              0));
     }
 
     return items;

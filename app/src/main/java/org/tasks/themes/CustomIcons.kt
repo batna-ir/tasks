@@ -39,7 +39,7 @@ object CustomIcons {
         1041 to R.drawable.ic_outline_work_outline_24px,
         1001 to R.drawable.ic_outline_pets_24px,
         1002 to R.drawable.ic_outline_payment_24px,
-        1003 to R.drawable.ic_outline_attach_money_24px,
+//        1003 to R.drawable.ic_outline_attach_money_24px,
         1059 to R.drawable.ic_outline_euro_symbol_24px,
         1042 to R.drawable.ic_outline_store_24px,
         1043 to R.drawable.ic_outline_shopping_cart_24px,

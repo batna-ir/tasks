@@ -11,6 +11,7 @@ import org.tasks.injection.InjectingApplication;
 import org.tasks.locale.Locale;
 import org.tasks.preferences.DefaultFilterProvider;
 import org.tasks.preferences.Preferences;
+import org.tasks.themes.ThemeCache;
 
 public class ScrollableWidgetUpdateService extends RemoteViewsService {
 
@@ -18,6 +19,7 @@ public class ScrollableWidgetUpdateService extends RemoteViewsService {
   @Inject Preferences preferences;
   @Inject SubtasksHelper subtasksHelper;
   @Inject DefaultFilterProvider defaultFilterProvider;
+  @Inject ThemeCache themeCache;
   @Inject Locale locale;
 
   @Override
@@ -52,6 +54,7 @@ public class ScrollableWidgetUpdateService extends RemoteViewsService {
         locale.createConfigurationContext(getApplicationContext()),
         widgetId,
         taskDao,
-        defaultFilterProvider);
+        defaultFilterProvider,
+        themeCache);
   }
 }

@@ -11,16 +11,17 @@ import com.todoroo.astrid.api.Filter
 import org.tasks.LocalBroadcastManager
 import org.tasks.R
 import org.tasks.activities.FilterSelectionActivity
+import org.tasks.dialogs.ColorWheelPicker
 import org.tasks.dialogs.ColorPalettePicker
 import org.tasks.dialogs.ColorPalettePicker.Companion.newColorPalette
-import org.tasks.dialogs.ColorPickerAdapter.Palette
-import org.tasks.dialogs.ColorWheelPicker
-import org.tasks.dialogs.ThemePickerDialog.Companion.newThemePickerDialog
+import org.tasks.dialogs.ColorPickerAdapter
 import org.tasks.injection.FragmentComponent
 import org.tasks.injection.InjectingPreferenceFragment
 import org.tasks.locale.Locale
 import org.tasks.preferences.DefaultFilterProvider
 import org.tasks.preferences.Preferences
+import org.tasks.themes.ThemeCache
+import org.tasks.themes.WidgetTheme
 import org.tasks.widget.TasksWidget
 import org.tasks.widget.WidgetPreferences
 import javax.inject.Inject
@@ -48,6 +49,7 @@ class ScrollableWidget : InjectingPreferenceFragment() {
     @Inject lateinit var defaultFilterProvider: DefaultFilterProvider
     @Inject lateinit var preferences: Preferences
     @Inject lateinit var locale: Locale
+    @Inject lateinit var themeCache: ThemeCache
     @Inject lateinit var localBroadcastManager: LocalBroadcastManager
 
     private lateinit var widgetPreferences: WidgetPreferences
@@ -78,7 +80,7 @@ class ScrollableWidget : InjectingPreferenceFragment() {
 
         findPreference(R.string.p_widget_theme)
             .setOnPreferenceClickListener {
-                newThemePickerDialog(this, REQUEST_THEME_SELECTION, widgetPreferences.themeIndex, true)
+                newColorPalette(this, REQUEST_THEME_SELECTION, ColorPickerAdapter.Palette.WIDGET_BACKGROUND)
                     .show(parentFragmentManager, FRAG_TAG_COLOR_PICKER)
                 false
             }
@@ -86,7 +88,7 @@ class ScrollableWidget : InjectingPreferenceFragment() {
         val colorPreference = findPreference(R.string.p_widget_color_v2)
         colorPreference.dependency = showHeader.key
         colorPreference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            newColorPalette(this, REQUEST_COLOR_SELECTION, widgetPreferences.color, Palette.WIDGET)
+            newColorPalette(this, REQUEST_COLOR_SELECTION, widgetPreferences.color)
                 .show(parentFragmentManager, FRAG_TAG_COLOR_PICKER)
             false
         }
@@ -139,8 +141,8 @@ class ScrollableWidget : InjectingPreferenceFragment() {
     }
 
     private fun updateTheme() {
-        val widgetNames = resources.getStringArray(R.array.widget_themes)
-        findPreference(R.string.p_widget_theme).summary = widgetNames[widgetPreferences.themeIndex]
+        val widgetTheme: WidgetTheme = themeCache.getWidgetTheme(widgetPreferences.themeIndex)
+        findPreference(R.string.p_widget_theme).summary = widgetTheme.name
     }
 
     private fun updateColor() {

@@ -2,13 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <Preference
-    android:title="@string/documentation"
-    app:icon="@drawable/ic_outline_help_outline_24px">
-    <intent
-      android:action="android.intent.action.VIEW"
-      android:data="https://tasks.org" />
-  </Preference>
+<!--  <Preference-->
+<!--    android:title="@string/documentation"-->
+<!--    app:icon="@drawable/ic_outline_help_outline_24px">-->
+<!--    <intent-->
+<!--      android:action="android.intent.action.VIEW"-->
+<!--      android:data="https://tasks.org" />-->
+<!--  </Preference>-->
 
   <Preference
     android:key="@string/contact_developer"
@@ -51,15 +51,15 @@
       android:targetPackage="@string/app_package" />
   </Preference>
 
-  <Preference
-    android:key="@string/upgrade_to_pro"
-    android:title="@string/upgrade_to_pro"
-    app:allowDividerAbove="true"
-    app:icon="@drawable/ic_outline_attach_money_24px">
-    <intent
-      android:targetClass="org.tasks.billing.PurchaseActivity"
-      android:targetPackage="@string/app_package" />
-  </Preference>
+<!--  <Preference-->
+<!--    android:key="@string/upgrade_to_pro"-->
+<!--    android:title="@string/upgrade_to_pro"-->
+<!--    app:allowDividerAbove="true"-->
+<!--&lt;!&ndash;    app:icon="@drawable/ic_outline_attach_money_24px">&ndash;&gt;-->
+<!--    <intent-->
+<!--      android:targetClass="org.tasks.billing.PurchaseActivity"-->
+<!--      android:targetPackage="@string/app_package" />-->
+<!--  </Preference>-->
 
   <Preference
     android:key="@string/refresh_purchases"

@@ -13,7 +13,6 @@ public class EteSyncCalendarSettingsActivity extends BaseCaldavCalendarSettingsA
   @Inject EteSyncClient client;
   private CreateCalendarViewModel createCalendarViewModel;
   private DeleteCalendarViewModel deleteCalendarViewModel;
-  private UpdateCalendarViewModel updateCalendarViewModel;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -21,22 +20,14 @@ public class EteSyncCalendarSettingsActivity extends BaseCaldavCalendarSettingsA
 
     createCalendarViewModel = ViewModelProviders.of(this).get(CreateCalendarViewModel.class);
     deleteCalendarViewModel = ViewModelProviders.of(this).get(DeleteCalendarViewModel.class);
-    updateCalendarViewModel = ViewModelProviders.of(this).get(UpdateCalendarViewModel.class);
 
     createCalendarViewModel.observe(this, this::createSuccessful, this::requestFailed);
     deleteCalendarViewModel.observe(this, this::onDeleted, this::requestFailed);
-    updateCalendarViewModel.observe(this, uid -> updateCalendar(), this::requestFailed);
   }
 
   @Override
-  protected void createCalendar(CaldavAccount caldavAccount, String name, int color) {
-    createCalendarViewModel.createCalendar(client, caldavAccount, name, color);
-  }
-
-  @Override
-  protected void updateNameAndColor(CaldavAccount account, CaldavCalendar calendar, String name,
-      int color) {
-    updateCalendarViewModel.updateCalendar(client, account, calendar, name, color);
+  protected void createCalendar(CaldavAccount caldavAccount, String name) {
+    createCalendarViewModel.createCalendar(client, caldavAccount, name);
   }
 
   @Override
