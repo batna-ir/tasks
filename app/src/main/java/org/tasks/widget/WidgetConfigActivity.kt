@@ -3,6 +3,7 @@ package org.tasks.widget
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import org.tasks.R
 import org.tasks.injection.ActivityComponent
 import org.tasks.preferences.BasePreferences
@@ -34,4 +35,7 @@ class WidgetConfigActivity : BasePreferences() {
     override fun getRootPreference() = newScrollableWidget(appWidgetId)
 
     override fun inject(component: ActivityComponent) = component.inject(this)
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

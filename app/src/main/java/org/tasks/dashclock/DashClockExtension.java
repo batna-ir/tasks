@@ -100,4 +100,7 @@ public class DashClockExtension extends com.google.android.apps.dashclock.api.Da
       Timber.e(e);
     }
   }
+
+  private class DashClockSettings {
+  }
 }

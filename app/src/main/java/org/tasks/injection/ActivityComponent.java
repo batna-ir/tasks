@@ -17,7 +17,7 @@ import org.tasks.activities.TagSettingsActivity;
 import org.tasks.billing.PurchaseActivity;
 import org.tasks.caldav.CaldavAccountSettingsActivity;
 import org.tasks.caldav.CaldavCalendarSettingsActivity;
-import org.tasks.dashclock.DashClockSettings;
+//import org.tasks.dashclock.DashClockSettings;
 import org.tasks.drive.DriveLoginActivity;
 import org.tasks.etesync.EncryptionSettingsActivity;
 import org.tasks.etesync.EteSyncAccountSettingsActivity;
@@ -58,7 +58,7 @@ public interface ActivityComponent {
 
   void inject(TaskerSettingsActivity taskerSettingsActivity);
 
-  void inject(DashClockSettings dashClockSettings);
+//  void inject(DashClockSettings dashClockSettings);
 
   void inject(CustomFilterActivity customFilterActivity);
 

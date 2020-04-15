@@ -12,35 +12,35 @@
     app:icon="@drawable/ic_outline_notifications_24px"
     app:title="@string/notifications" />
 
-  <Preference
-    app:fragment="org.tasks.preferences.fragments.Synchronization"
-    app:icon="@drawable/ic_outline_cloud_24px"
-    app:title="@string/synchronization" />
+<!--  <Preference-->
+<!--    app:fragment="org.tasks.preferences.fragments.Synchronization"-->
+<!--    app:icon="@drawable/ic_outline_cloud_24px"-->
+<!--    app:title="@string/synchronization" />-->
 
   <Preference
     app:fragment="org.tasks.preferences.fragments.TaskDefaults"
     app:icon="@drawable/ic_outline_edit_24px"
     app:title="@string/task_defaults" />
 
-  <Preference
-    app:fragment="org.tasks.preferences.fragments.Backups"
-    app:icon="@drawable/ic_outline_sd_storage_24px"
-    app:title="@string/backup_BPr_header" />
+<!--  <Preference-->
+<!--    app:fragment="org.tasks.preferences.fragments.Backups"-->
+<!--    app:icon="@drawable/ic_outline_sd_storage_24px"-->
+<!--    app:title="@string/backup_BPr_header" />-->
 
   <Preference
     app:fragment="org.tasks.preferences.fragments.Advanced"
     app:icon="@drawable/ic_outline_build_24px"
     app:title="@string/preferences_advanced" />
 
-  <Preference
-    app:fragment="org.tasks.preferences.fragments.HelpAndFeedback"
-    app:icon="@drawable/ic_outline_info_24px"
-    app:title="@string/about" />
+<!--  <Preference-->
+<!--    app:fragment="org.tasks.preferences.fragments.HelpAndFeedback"-->
+<!--    app:icon="@drawable/ic_outline_info_24px"-->
+<!--    app:title="@string/about" />-->
 
-  <Preference
-    android:key="@string/debug"
-    app:fragment="org.tasks.preferences.fragments.Debug"
-    app:icon="@drawable/ic_outline_bug_report_24px"
-    app:title="@string/debug" />
+<!--  <Preference-->
+<!--    android:key="@string/debug"-->
+<!--    app:fragment="org.tasks.preferences.fragments.Debug"-->
+<!--    app:icon="@drawable/ic_outline_bug_report_24px"-->
+<!--    app:title="@string/debug" />-->
 
 </PreferenceScreen>

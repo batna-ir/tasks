@@ -1,6 +1,7 @@
 package org.tasks.locale.ui.activity
 
 import android.os.Bundle
+import android.view.MenuItem
 import org.tasks.R
 import org.tasks.injection.ActivityComponent
 import org.tasks.locale.bundle.ListNotificationBundle
@@ -35,6 +36,9 @@ class TaskerSettingsActivity : AbstractFragmentPluginPreference() {
     override fun getRootPreference() = newTaskerListNotification(filter)
 
     override fun inject(component: ActivityComponent) = component.inject(this)
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private fun getFragment() =
         supportFragmentManager.findFragmentById(R.id.settings) as TaskerListNotification

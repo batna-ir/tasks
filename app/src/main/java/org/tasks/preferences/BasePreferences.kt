@@ -98,12 +98,12 @@ abstract class BasePreferences : ThemedInjectingAppCompatActivity(),
         return true
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        return if (item?.itemId == R.id.menu_help_and_feedback) {
-            startActivity(Intent(this, HelpAndFeedback::class.java))
-            true
-        } else {
-            false
-        }
-    }
+//    override fun onMenuItemClick(item: MenuItem?): Boolean {
+//        return if (item?.itemId == R.id.menu_help_and_feedback) {
+//            startActivity(Intent(this, HelpAndFeedback::class.java))
+//            true
+//        } else {
+//            false
+//        }
+//    }
 }
